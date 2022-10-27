@@ -127,8 +127,8 @@ void main_loop(void)
     // TODO: See if we can find a way to make use of bootargs
     //setenv("bootargs", safe);
     char bootargs[CONFIG_SYS_CBSIZE];
-    cli_simple_process_macros("${cbootargs} root=/dev/ram0 rw rootwait ${bootargs}", bootargs);
-    setenv("bootargs", bootargs);
+    cli_simple_process_macros("${cbootargs} root=/dev/ram0 rw rootwait ${bootargs}", bootargs, sizeof(bootargs));
+    env_set("bootargs", bootargs);
 
     if(!abortboot(5)) {
         char initrd_loc[YOCTO_INFO_BYTES*2] = "";

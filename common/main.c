@@ -132,7 +132,7 @@ void main_loop(void)
 
     if(!abortboot(5)) {
         char initrd_loc[YOCTO_INFO_BYTES*2] = "";
-        sprintf(initrd_loc, "%lu:%x", outputs[3], sizes[3]);
+        sprintf(initrd_loc, "%lu:%lu", outputs[3], sizes[3]);
 		char image_loc[YOCTO_INFO_BYTES] = "";
         sprintf(image_loc, "%lu", outputs[1]);
         char dtb_loc[YOCTO_INFO_BYTES] = "";

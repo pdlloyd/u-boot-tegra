@@ -140,7 +140,7 @@ void main_loop(void)
         char *argv[4] = {"booti", image_loc,
                          initrd_loc,
                          dtb_loc};
-        cmd_tbl_t *bcmd = find_cmd("booti");
+        cmd_tbl *bcmd = find_cmd("booti");
         do_booti(bcmd, 0, 4, argv);
     } else {
 	cli_loop();

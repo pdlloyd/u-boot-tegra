@@ -132,11 +132,11 @@ void main_loop(void)
 
     if(!abortboot(5)) {
         char initrd_loc[YOCTO_INFO_BYTES*2] = "";
-        sprintf(initrd_loc, "%x:%x", outputs[3], sizes[3]);
+        sprintf(initrd_loc, "%lu:%x", outputs[3], sizes[3]);
 		char image_loc[YOCTO_INFO_BYTES] = "";
-        sprintf(image_loc, "%x", outputs[1]);
+        sprintf(image_loc, "%lu", outputs[1]);
         char dtb_loc[YOCTO_INFO_BYTES] = "";
-        sprintf(dtb_loc, "%x", outputs[2]);
+        sprintf(dtb_loc, "%lu", outputs[2]);
         char *argv[4] = {"booti", image_loc,
                          initrd_loc,
                          dtb_loc};

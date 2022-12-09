@@ -6,18 +6,21 @@
 
 /* #define	DEBUG	*/
 
+// patches-v2022.01-tmr
+
 #include <common.h>
 #include <autoboot.h>
 #include <bootstage.h>
 #include <cli.h>
 #include <command.h>
 #include <console.h>
+#include <malloc.h>
 #include <env.h>
 #include <init.h>
 #include <net.h>
 #include <version_string.h>
 #include <efi_loader.h>
-#include <../common/tmr.c>
+#include <tmr.h>
 
 static void run_preboot_environment_command(void)
 {
@@ -84,6 +87,8 @@ void main_loop(void)
     sizes[0] = YOCTO_INFO_BYTES * 4; //info file, 4 filesizes
     char *safe = "s=----";
 
+if (YOCTO_SOL_ENABLE_TMR) {
+     
     printf("TMRing info files\n");
     if(
         tmr_blob(
@@ -123,7 +128,14 @@ void main_loop(void)
             safe[i+2] = 'x';
         }
     }
-
+} else {
+    printf("TMR DISABLED - No Hash Checks\n");
+    printf("Copying files directly to memory.\n");
+    memcpy((void *)outputs[0], (void *)part_offset[0] + file_offset[0], sizes[0]);  // Info file 
+    memcpy((void *)outputs[1], (void *)part_offset[0] + file_offset[2], sizes[1]);  // Image File
+    memcpy((void *)outputs[2], (void *)part_offset[0] + file_offset[4], sizes[2]);  // DTB File
+    memcpy((void *)outputs[3], (void *)part_offset[0] + file_offset[6], sizes[3]);  // Initrd File
+}
     // TODO: See if we can find a way to make use of bootargs
     //setenv("bootargs", safe);
     char bootargs[CONFIG_SYS_CBSIZE];

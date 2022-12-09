@@ -10,6 +10,7 @@
 #include <u-boot/md5.h>
 #include <blk.h>
 #include <mmc.h>
+#include <tmr.h>
 
 static void load_blobs_with_hashes(
 	ulong file1, ulong hash1,
